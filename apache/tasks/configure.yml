@@ -1,0 +1,9 @@
+---
+# tasks file for apache
+  - name: Configure httpd
+    template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+    notify:
+    - Restart httpd
+
+  - name: Copy index.html file
+    template: src=index.html.j2 dest=/var/www/html/index.html

@@ -1,0 +1,4 @@
+---
+# handlers file for apache
+  - name: Restart httpd
+    systemd: name=httpd state=restarted

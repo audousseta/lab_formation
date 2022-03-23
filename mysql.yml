@@ -1,0 +1,12 @@
+---
+  - name: Installation MySQL if 900Mo RAM
+    hosts: all
+    become: yes
+
+    tasks:
+    - name: Install MySQL if 900Mo RAM
+      yum:
+        name: mysql-server
+        state: latest
+      when: ansible_memtotal_mb > 900
+

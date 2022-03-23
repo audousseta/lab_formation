@@ -1,0 +1,20 @@
+---
+  - name: Load env
+    gather_facts: no
+    hosts: all
+
+    vars:
+      my_env: "{{ lookup('env', 'HOME') }}"
+      my_env_2: "{{ lookup('pipe', 'date') }}"
+      my_file: "{{ lookup('file', '/etc/passwd') }}"
+
+    tasks:
+    - name: show the env
+      debug:
+        msg: "{{ my_env }}" 
+    - name: show date
+      debug:
+        msg: "{{ my_env_2 }}"
+    - name: show test file content
+      debug:
+        msg: "{{ my_file }}"

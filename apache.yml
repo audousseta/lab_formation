@@ -8,14 +8,24 @@
       yum:
         name: httpd
         state: latest
+      tags:
+      - package
 
     - name: "Apache Start"
       systemd:
         name: httpd
         enabled: true
         state: started
+      tags:
+      - service 
 
     - name: "Copy index.html"
       copy:
         src: index.html
         dest: /var/www/html/
+      tags:
+      - deploy
+
+    - debug: msg="Always runs"
+      tags:
+      - always

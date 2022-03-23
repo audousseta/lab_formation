@@ -1,0 +1,32 @@
+---
+  - hosts: webservers
+    gather_facts: true
+    become: true
+
+    tasks:
+    - name: install, configure and start Apache
+      block:
+      - name: deploy index.html
+        template: src=index.html.j2 dest=/var/www/html/index.html
+
+      rescue:
+      - name: Install httpd
+        yum:
+          name: httpd
+          state: present
+
+      - name: Apply configuration template
+        copy:
+          src: httpd.conf
+          dest: /etc/httpd/conf/httpd.conf
+
+      - name: deploy index.html
+        template: src=index.html.j2 dest=/var/www/html/index.html
+
+      always:
+      - name: Start service
+        systemd:
+          name: httpd
+          state: started
+      
+      when: ansible_os_family == "RedHat"
